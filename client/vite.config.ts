@@ -11,33 +11,33 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: "@",
+        find: "@app",
         replacement: fileURLToPath(new URL("./src", import.meta.url)),
       },
       {
-        find: "@assets",
+        find: "@app/assets",
         replacement: fileURLToPath(new URL("./src/assets", import.meta.url)),
       },
       {
-        find: "@components",
+        find: "@app/components",
         replacement: fileURLToPath(
           new URL("./src/components", import.meta.url)
         ),
       },
       {
-        find: "@pages",
+        find: "@app/pages",
         replacement: fileURLToPath(new URL("./src/pages", import.meta.url)),
       },
       {
-        find: "@services",
+        find: "@app/services",
         replacement: fileURLToPath(new URL("./src/services", import.meta.url)),
       },
       {
-        find: "@utils",
+        find: "@app/utils",
         replacement: fileURLToPath(new URL("./src/utils", import.meta.url)),
       },
       {
-        find: "@configs",
+        find: "@app/configs",
         replacement: fileURLToPath(new URL("./src/configs", import.meta.url)),
       },
     ],
