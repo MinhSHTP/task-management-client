@@ -1,4 +1,4 @@
-import { Login, Dashboard } from "@app/pages";
+import { Login, Dashboard } from "@pages";
 
 function App() {
   return (

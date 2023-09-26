@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { fileURLToPath, URL } from "url";
+import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,37 +9,14 @@ export default defineConfig({
     port: 5555,
   },
   resolve: {
-    alias: [
-      {
-        find: "@app",
-        replacement: fileURLToPath(new URL("./src", import.meta.url)),
-      },
-      {
-        find: "@app/assets",
-        replacement: fileURLToPath(new URL("./src/assets", import.meta.url)),
-      },
-      {
-        find: "@app/components",
-        replacement: fileURLToPath(
-          new URL("./src/components", import.meta.url)
-        ),
-      },
-      {
-        find: "@app/pages",
-        replacement: fileURLToPath(new URL("./src/pages", import.meta.url)),
-      },
-      {
-        find: "@app/services",
-        replacement: fileURLToPath(new URL("./src/services", import.meta.url)),
-      },
-      {
-        find: "@app/utils",
-        replacement: fileURLToPath(new URL("./src/utils", import.meta.url)),
-      },
-      {
-        find: "@app/configs",
-        replacement: fileURLToPath(new URL("./src/configs", import.meta.url)),
-      },
-    ],
+    alias: {
+      src: path.resolve("src/"),
+      "@assets": path.resolve("src/assets"),
+      "@components": path.resolve("src/components"),
+      "@pages": path.resolve("src/pages"),
+      "@services": path.resolve("src/services"),
+      "@utils": path.resolve("src/utils"),
+      "@configs": path.resolve("src/configs"),
+    },
   },
 });
