@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Input, Button } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "src/graphql/authentication";
-import { Authentication } from "src/types";
+import { Authentication, UserInfoAuthentication } from "src/types";
 
 export const Login: React.FC = () => {
   const [loginInput, setLoginInput] = useState<Authentication>({});
@@ -12,6 +12,12 @@ export const Login: React.FC = () => {
       console.log(data);
       if (data.success) {
         localStorage.setItem("token", data.token);
+
+        const userInfo = {
+          userId: data.userId,
+          username: loginInput?.username,
+        } as UserInfoAuthentication;
+        localStorage.setItem("user", JSON.stringify(userInfo));
       }
     },
   });

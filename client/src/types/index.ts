@@ -1,4 +1,1 @@
-export type Authentication = {
-  usename?: string;
-  password?: string;
-};
+export * from "./authentication";

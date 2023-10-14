@@ -5,6 +5,7 @@ const LOGIN = gql`
       message
       success
       token
+      userId
     }
   }
 `;
