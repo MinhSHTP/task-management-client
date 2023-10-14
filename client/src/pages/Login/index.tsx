@@ -1,51 +1,59 @@
-export const Login = () => {
+import React, { useState } from "react";
+import { Input, Button } from "@mui/material";
+import { useMutation } from "@apollo/client";
+import { LOGIN } from "src/graphql/authentication";
+import { Authentication } from "src/types";
+
+export const Login: React.FC = () => {
+  const [loginInput, setLoginInput] = useState<Authentication>({});
+
+  const [doLogin] = useMutation(LOGIN, {
+    onCompleted: (data) => {
+      console.log(data);
+      if (data.success) {
+        localStorage.setItem("token", data.token);
+      }
+    },
+  });
+
+  const handleLogin = () => {
+    doLogin({ variables: { loginInput } });
+  };
+
+  const handleLoginInputChange = (e: React.FocusEvent<HTMLInputElement>) => {
+    setLoginInput({ ...loginInput, [e.target.name]: e.target.value });
+  };
   return (
-    <>
-      <div
-        style={{
-          display: "flex",
-          background: "red",
-          flexDirection: "column",
-          justifyItems: "center",
-          alignItems: "center",
-        }}
-      >
-        <div style={{ flex: 1, background: "blue", width: "100%" }}>
-          <p>Top LOGIN PAGE</p>
-        </div>
+    <div
+      style={{
+        display: "flex",
+        textAlign: "center",
+        flexDirection: "column",
+      }}
+    >
+      <div>
+        <h2>LOGIN PAGE</h2>
       </div>
-      <div
-        style={{
-          display: "flex",
-          background: "red",
-          flexDirection: "column",
-          justifyItems: "center",
-          alignItems: "center",
-        }}
-      >
-        <div style={{ flex: 1, background: "red", width: "100%" }}>
-          <p>LOGIN PAGE</p>
-        </div>
+      <div>
+        <Input
+          name="username"
+          placeholder="Username"
+          onBlur={handleLoginInputChange}
+        />
       </div>
-      <div
-        style={{
-          display: "flex",
-          background: "red",
-          flexDirection: "column",
-          justifyItems: "center",
-          alignItems: "center",
-        }}
-      >
-        <div
-          style={{
-            flex: 1,
-            background: "green",
-            width: "100%",
-          }}
-        >
-          <p>Footer LOGIN PAGE</p>
-        </div>
+      <div style={{ marginTop: "20px" }}>
+        <Input
+          name="password"
+          placeholder="Password"
+          type="password"
+          onBlur={handleLoginInputChange}
+        />
       </div>
-    </>
+      <div style={{ marginTop: "20px" }}>
+        <Button variant="contained" onClick={handleLogin}>
+          Login
+        </Button>
+      </div>
+    </div>
   );
 };
