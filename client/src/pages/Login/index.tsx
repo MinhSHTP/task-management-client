@@ -3,13 +3,16 @@ import { Input, Button } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "src/graphql/authentication";
 import { Authentication, UserInfoAuthentication } from "src/types";
+import { useNavigate } from "react-router-dom";
+import { APP_PATH } from "@utils";
 
 export const Login: React.FC = () => {
+  const nav = useNavigate();
   const [loginInput, setLoginInput] = useState<Authentication>({});
 
   const [doLogin] = useMutation(LOGIN, {
-    onCompleted: (data) => {
-      console.log(data);
+    onCompleted: (res) => {
+      const data = res?.login;
       if (data.success) {
         localStorage.setItem("token", data.token);
 
@@ -18,6 +21,7 @@ export const Login: React.FC = () => {
           username: loginInput?.username,
         } as UserInfoAuthentication;
         localStorage.setItem("user", JSON.stringify(userInfo));
+        nav(APP_PATH.DASHBOARD_ROUTE);
       }
     },
   });
