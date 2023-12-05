@@ -1,15 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { Input, Button } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "src/graphql/authentication";
 import { Authentication, UserInfoAuthentication } from "src/types";
 import { useNavigate } from "react-router-dom";
 import { APP_PATH } from "@utils";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { useForm } from "react-hook-form";
 
 export const Login: React.FC = () => {
-  const nav = useNavigate();
-  const [loginInput, setLoginInput] = useState<Authentication>({});
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
+  const nav = useNavigate();
   const [doLogin] = useMutation(LOGIN, {
     onCompleted: (res) => {
       const data = res?.login;
@@ -18,7 +25,7 @@ export const Login: React.FC = () => {
 
         const userInfo = {
           userId: data.userId,
-          username: loginInput?.username,
+          username: watch("username"),
         } as UserInfoAuthentication;
         localStorage.setItem("user", JSON.stringify(userInfo));
         nav(APP_PATH.DASHBOARD_ROUTE);
@@ -26,44 +33,59 @@ export const Login: React.FC = () => {
     },
   });
 
-  const handleLogin = () => {
-    doLogin({ variables: { loginInput } });
+  const handleLogin = (data: Authentication) => {
+    doLogin({ variables: { loginInput: data } });
   };
 
-  const handleLoginInputChange = (e: React.FocusEvent<HTMLInputElement>) => {
-    setLoginInput({ ...loginInput, [e.target.name]: e.target.value });
-  };
   return (
-    <div
-      style={{
-        display: "flex",
-        textAlign: "center",
-        flexDirection: "column",
-      }}
+    <Grid2
+      container
+      padding={2}
+      spacing={2}
+      direction="column"
+      alignContent="center"
+      justifyContent="center"
     >
-      <div>
-        <h2>LOGIN PAGE</h2>
-      </div>
-      <div>
-        <Input
-          name="username"
-          placeholder="Username"
-          onBlur={handleLoginInputChange}
-        />
-      </div>
-      <div style={{ marginTop: "20px" }}>
-        <Input
-          name="password"
-          placeholder="Password"
-          type="password"
-          onBlur={handleLoginInputChange}
-        />
-      </div>
-      <div style={{ marginTop: "20px" }}>
-        <Button variant="contained" onClick={handleLogin}>
-          Login
-        </Button>
-      </div>
-    </div>
+      <Grid2>
+        <h2>TASK MANAGEMENT</h2>
+      </Grid2>
+      <form onSubmit={handleSubmit(handleLogin)}>
+        <Grid2
+          container
+          spacing={2}
+          direction="column"
+          alignContent="center"
+          justifyContent="center"
+        >
+          <Grid2>
+            <Input
+              placeholder="Username"
+              {...register("username", { required: true })}
+            />
+          </Grid2>
+          {errors.username && <Grid2 color="red">Username is required</Grid2>}
+
+          <Grid2>
+            <Input
+              placeholder="Password"
+              type="password"
+              {...register("password", { required: true })}
+            />
+          </Grid2>
+          {errors.password && <Grid2 color="red">Password is required</Grid2>}
+
+          <Grid2
+            container
+            padding={4}
+            alignContent="center"
+            justifyContent="center"
+          >
+            <Button variant="contained" type="submit">
+              Login
+            </Button>
+          </Grid2>
+        </Grid2>
+      </form>
+    </Grid2>
   );
 };
