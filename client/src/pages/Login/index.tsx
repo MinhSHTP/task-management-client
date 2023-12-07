@@ -45,47 +45,49 @@ export const Login: React.FC = () => {
       direction="column"
       alignContent="center"
       justifyContent="center"
+      style={{
+        position: "absolute",
+        height: "100%",
+        width: "100%",
+        background: "linear-gradient(45deg, skyblue, transparent)",
+      }}
     >
-      <Grid2>
-        <h2>TASK MANAGEMENT</h2>
-      </Grid2>
-      <form onSubmit={handleSubmit(handleLogin)}>
-        <Grid2
-          container
-          spacing={2}
-          direction="column"
-          alignContent="center"
-          justifyContent="center"
-        >
-          <Grid2>
-            <Input
-              placeholder="Username"
-              {...register("username", { required: true })}
-            />
-          </Grid2>
-          {errors.username && <Grid2 color="red">Username is required</Grid2>}
-
-          <Grid2>
-            <Input
-              placeholder="Password"
-              type="password"
-              {...register("password", { required: true })}
-            />
-          </Grid2>
-          {errors.password && <Grid2 color="red">Password is required</Grid2>}
-
-          <Grid2
-            container
-            padding={4}
-            alignContent="center"
-            justifyContent="center"
-          >
-            <Button variant="contained" type="submit">
-              Login
-            </Button>
-          </Grid2>
+      <Grid2 alignContent="center" justifyContent="center">
+        <Grid2>
+          <h2>Login</h2>
         </Grid2>
-      </form>
+        <form onSubmit={handleSubmit(handleLogin)}>
+          <Grid2 container spacing={2} direction="column">
+            <Grid2>
+              <Input
+                placeholder="Username"
+                {...register("username", { required: true })}
+              />
+            </Grid2>
+            {errors.username && <Grid2 color="red">Username is required</Grid2>}
+
+            <Grid2>
+              <Input
+                placeholder="Password"
+                type="password"
+                {...register("password", { required: true })}
+              />
+            </Grid2>
+            {errors.password && <Grid2 color="red">Password is required</Grid2>}
+
+            <Grid2
+              container
+              padding={4}
+              alignContent="center"
+              justifyContent="center"
+            >
+              <Button variant="contained" type="submit">
+                Login
+              </Button>
+            </Grid2>
+          </Grid2>
+        </form>
+      </Grid2>
     </Grid2>
   );
 };
