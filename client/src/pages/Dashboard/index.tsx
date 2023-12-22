@@ -18,6 +18,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 import { CustomAppBar, CustomDrawer, CustomDrawerHeader } from "./styled";
 import { useTheme } from "@mui/material/styles";
@@ -49,6 +50,7 @@ export const Dashboard: React.FC = () => {
                 marginRight: 5,
                 ...(open && { display: "none" }),
               }}
+              style={{ outline: "none" }}
             >
               <MenuIcon />
             </IconButton>
@@ -59,7 +61,7 @@ export const Dashboard: React.FC = () => {
         </CustomAppBar>
         <CustomDrawer variant="permanent" open={open}>
           <CustomDrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
+            <IconButton onClick={handleDrawerClose} style={{ outline: "none" }}>
               {theme.direction === "rtl" ? (
                 <ChevronRightIcon />
               ) : (
@@ -117,6 +119,30 @@ export const Dashboard: React.FC = () => {
               </ListItem>
             ))}
           </List>
+          <ListItem
+            key="Logout"
+            disablePadding
+            sx={{ display: "block", position: "absolute", bottom: 0 }}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Logout" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
         </CustomDrawer>
 
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
