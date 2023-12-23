@@ -64,7 +64,13 @@ export const Login: React.FC = () => {
       }}
     >
       <Grid item alignContent="center" justifyContent="center">
-        <Card style={{ borderRadius: 10, padding: 20 }}>
+        <Card
+          style={{
+            borderRadius: 10,
+            padding: 20,
+            boxShadow: "#717171 5px 5px 5px",
+          }}
+        >
           <CardHeader
             title="Login"
             sx={{
