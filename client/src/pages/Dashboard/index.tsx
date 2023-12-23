@@ -11,17 +11,19 @@ import {
   ListItemText,
   Toolbar,
   Typography,
+  Grid,
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import LogoutIcon from "@mui/icons-material/Logout";
+import AvatarIcon from "@mui/icons-material/Person";
 
 import { CustomAppBar, CustomDrawer, CustomDrawerHeader } from "./styled";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { APP_PATH, INITIAL_DASHBOARD_MENU_ITEMS } from "@utils";
+import { APP_PATH, INITIAL_DASHBOARD_MENU_ITEMS, getLoggedUser } from "@utils";
 
 export const Dashboard: React.FC = () => {
   const nav = useNavigate();
@@ -30,6 +32,8 @@ export const Dashboard: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   const [selectedMenuItem, setSelectedMenuItem] = useState("");
+
+  const loggedUser = getLoggedUser();
 
   useEffect(() => {
     setSelectedMenuItem(APP_PATH.DASHBOARD_ROUTE);
@@ -78,6 +82,10 @@ export const Dashboard: React.FC = () => {
         </CustomAppBar>
         <CustomDrawer variant="permanent" open={open}>
           <CustomDrawerHeader>
+            <Grid container alignContent="center" justifyContent="center">
+              <AvatarIcon />
+              {loggedUser.username}
+            </Grid>
             <IconButton onClick={handleDrawerClose} style={{ outline: "none" }}>
               {theme.direction === "rtl" ? (
                 <ChevronRightIcon />
