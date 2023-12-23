@@ -24,6 +24,7 @@ import { CustomAppBar, CustomDrawer, CustomDrawerHeader } from "./styled";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { APP_PATH, INITIAL_DASHBOARD_MENU_ITEMS, getLoggedUser } from "@utils";
+import { DashboardMenuItem } from "@src/types";
 
 export const Dashboard: React.FC = () => {
   const nav = useNavigate();
@@ -31,12 +32,17 @@ export const Dashboard: React.FC = () => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
-  const [selectedMenuItem, setSelectedMenuItem] = useState("");
+  const [selectedMenuItem, setSelectedMenuItem] = useState<
+    DashboardMenuItem | undefined
+  >();
 
   const loggedUser = getLoggedUser();
 
   useEffect(() => {
-    setSelectedMenuItem(APP_PATH.DASHBOARD_ROUTE);
+    const defaultSelectedMenuItem = INITIAL_DASHBOARD_MENU_ITEMS.find(
+      (item) => item.path === APP_PATH.DASHBOARD_ROUTE
+    );
+    setSelectedMenuItem(defaultSelectedMenuItem);
   }, []);
 
   const handleDrawerOpen = () => {
@@ -76,7 +82,7 @@ export const Dashboard: React.FC = () => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              Dashboard
+              {selectedMenuItem?.title}
             </Typography>
           </Toolbar>
         </CustomAppBar>
@@ -103,8 +109,10 @@ export const Dashboard: React.FC = () => {
                 sx={{
                   display: "block",
                   background:
-                    selectedMenuItem === item.path ? "#1976d2" : "transparent",
-                  color: selectedMenuItem === item.path ? "#fff" : "#000",
+                    selectedMenuItem?.path === item.path
+                      ? "#1976d2"
+                      : "transparent",
+                  color: selectedMenuItem?.path === item.path ? "#fff" : "#000",
                   "&.MuiListItem-root:hover": {
                     background: "#1976d2",
                     color: "#fff",
