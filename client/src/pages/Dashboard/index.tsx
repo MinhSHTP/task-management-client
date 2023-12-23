@@ -22,8 +22,12 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 import { CustomAppBar, CustomDrawer, CustomDrawerHeader } from "./styled";
 import { useTheme } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
+import { APP_PATH } from "@utils";
 
 export const Dashboard: React.FC = () => {
+  const nav = useNavigate();
+
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
@@ -33,6 +37,15 @@ export const Dashboard: React.FC = () => {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleLogout = () => {
+    // Clean up local storage
+    localStorage.clear();
+
+    // TODO: Clean up store
+
+    nav(APP_PATH.LOGIN_ROUTE);
   };
 
   return (
@@ -123,6 +136,7 @@ export const Dashboard: React.FC = () => {
             key="Logout"
             disablePadding
             sx={{ display: "block", position: "absolute", bottom: 0 }}
+            onClick={handleLogout}
           >
             <ListItemButton
               sx={{
