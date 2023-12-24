@@ -28,6 +28,8 @@
       "@services": ["src/services"],
       "@utils": ["src/utils"],
       "@configs": ["src/configs"],
+      "@types": ["src/types"],
+
     }
   },
   "include": ["src"],
